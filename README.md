@@ -47,7 +47,7 @@ pytest
 ```
 
 ## Notas
-- No esta probado pero si cumple con los requisitos requeridos. 😬😔
+- ⚠️No esta probado,aún no está conectado a una base de datos real. Algunas funcionalidades y pruebas pueden fallar hasta que se configure la conexión con la base de datos definitiva, pero si cumple con los requisitos requeridos. 😬😔
 - Cada registro importado utiliza su identificador único.
 - Se verifica que la cantidad de registros importados coincida con los XML.
 - El código está estructurado para facilitar el mantenimiento y la extensión.
