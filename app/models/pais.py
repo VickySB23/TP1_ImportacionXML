@@ -1,20 +1,25 @@
 from dataclasses import dataclass
-from app import db
+from sqlalchemy import Column, Integer, String
+from app.config.database import Base
+import xml.etree.ElementTree as ET
 
 @dataclass(init=False, repr=True, eq=True)
-class Pais(db.Model):
+class Pais(Base):
     __tablename__ = 'paises'
     
-    id = db.Column(db.Integer, primary_key=True)
-    nombre = db.Column(db.String(100), nullable=False)
-    codigo_iso = db.Column(db.String(3), unique=True)
-    nacionalidad = db.Column(db.String(100))
+    id = Column(Integer, primary_key=True)
+    nombre = Column(String(100), nullable=False)
+    codigo_iso = Column(String(3), unique=True)
+    nacionalidad = Column(String(100))
     
     @classmethod
-    def from_xml_node(cls, node):
-        return cls(
-            id=int(node.find('id').text),
-            nombre=node.find('nombre').text.strip(),
-            codigo_iso=node.find('codigo_iso').text.strip(),
-            nacionalidad=node.find('nacionalidad').text.strip()
-        )
+    def from_xml_node(cls, node: ET.Element):
+        fields = {}
+        for col in cls.__table__.columns:
+            xml_value = node.find(col.name)
+            if xml_value is not None and xml_value.text is not None:
+                value = xml_value.text.strip()
+                if isinstance(col.type, Integer):
+                    value = int(value)
+                fields[col.name] = value
+        return cls(**fields)

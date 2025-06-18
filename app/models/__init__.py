@@ -1,4 +1,4 @@
-from app.config.database import db  # Importa db primero
+from app.config.database import Base  # Importa Base primero
 
 # Luego importa tus modelos
 from .especialidad import Especialidad
@@ -11,4 +11,14 @@ from .pais import Pais
 from .plan import Plan
 from .universidad import Universidad
 
-__all__ = ['Especialidad', 'Materia', 'Facultad', 'Grado', 'Localidad', 'Orientacion', 'Pais', 'Plan', 'Universidad']  # Lista todos los modelos
+__all__ = [
+    'Especialidad',
+    'Materia',
+    'Facultad',
+    'Grado',
+    'Localidad',
+    'Orientacion',
+    'Pais',
+    'Plan',
+    'Universidad'
+]

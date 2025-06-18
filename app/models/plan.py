@@ -1,23 +1,31 @@
 from dataclasses import dataclass
 from datetime import datetime
-from app import db
+from sqlalchemy import Column, Integer, String, Boolean, Date
+from app.config.database import Base
+import xml.etree.ElementTree as ET
 
 @dataclass(init=False, repr=True, eq=True)
-class Plan(db.Model):
+class Plan(Base):
     __tablename__ = 'planes'
     
-    id = db.Column(db.Integer, primary_key=True)
-    nombre = db.Column(db.String(100), nullable=True)
-    codigo = db.Column(db.String(20), unique=True)
-    vigente = db.Column(db.Boolean, default=True)
-    fecha_aprobacion = db.Column(db.Date)
+    id = Column(Integer, primary_key=True)
+    nombre = Column(String(100), nullable=True)
+    codigo = Column(String(20), unique=True)
+    vigente = Column(Boolean, default=True)
+    fecha_aprobacion = Column(Date)
     
     @classmethod
-    def from_xml_node(cls, node):
-        return cls(
-            id=int(node.find('id').text),
-            nombre=node.find('nombre').text.strip(),
-            codigo=node.find('codigo').text.strip(),
-            vigente=node.find('vigente').text.strip().lower() == 'true',
-            fecha_aprobacion=datetime.strptime(node.find('fecha_aprobacion').text.strip(), '%Y-%m-%d').date()
-        )
+    def from_xml_node(cls, node: ET.Element):
+        fields = {}
+        for col in cls.__table__.columns:
+            xml_value = node.find(col.name)
+            if xml_value is not None and xml_value.text is not None:
+                value = xml_value.text.strip()
+                if isinstance(col.type, Integer):
+                    value = int(value)
+                elif isinstance(col.type, Boolean):
+                    value = value.lower() == 'true'
+                elif isinstance(col.type, Date):
+                    value = datetime.strptime(value, '%Y-%m-%d').date()
+                fields[col.name] = value
+        return cls(**fields)

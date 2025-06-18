@@ -2,10 +2,8 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 import os
-from flask_sqlalchemy import SQLAlchemy
 
-db = SQLAlchemy()
-# Configuración desde variables de entorno (recomendado para seguridad)
+# Configuración desde variables de entorno
 DB_USER = os.getenv('DB_USER', 'sysacad')
 DB_PASSWORD = os.getenv('DB_PASSWORD', 'sysacad2025')
 DB_HOST = os.getenv('DB_HOST', 'localhost')
@@ -18,9 +16,9 @@ SQLALCHEMY_DATABASE_URL = f"postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_P
 # Crear el motor de SQLAlchemy
 engine = create_engine(
     SQLALCHEMY_DATABASE_URL,
-    pool_size=20,  # Número de conexiones en el pool
-    max_overflow=10,  # Conexiones adicionales cuando el pool está lleno
-    pool_pre_ping=True  # Verifica que las conexiones estén activas
+    pool_size=20,
+    max_overflow=10,
+    pool_pre_ping=True
 )
 
 # SessionLocal será usado por los modelos
