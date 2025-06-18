@@ -47,7 +47,7 @@ pytest
 ```
 
 ## Notas
--No esta probado pero si cumple con los requisitos requeridos
+-No esta probado pero si cumple con los requisitos requeridos. 😬😔
 - Cada registro importado utiliza su identificador único.
 - Se verifica que la cantidad de registros importados coincida con los XML.
 - El código está estructurado para facilitar el mantenimiento y la extensión.
