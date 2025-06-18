@@ -2,13 +2,15 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 import os
+from flask_sqlalchemy import SQLAlchemy
 
+db = SQLAlchemy()
 # Configuración desde variables de entorno
-DB_USER = os.getenv('DB_USER', 'sysacad')
-DB_PASSWORD = os.getenv('DB_PASSWORD', 'sysacad2025')
+DB_USER = os.getenv('DB_USER', 'Relyckon')
+DB_PASSWORD = os.getenv('DB_PASSWORD', 'tienshu123')
 DB_HOST = os.getenv('DB_HOST', 'localhost')
-DB_PORT = os.getenv('DB_PORT', '5432')
-DB_NAME = os.getenv('DB_NAME', 'DEV_SYSACAD')
+DB_PORT = os.getenv('DB_PORT', '5433')
+DB_NAME = os.getenv('DB_NAME', 'SYSACAD')
 
 # Cadena de conexión para PostgreSQL
 SQLALCHEMY_DATABASE_URL = f"postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
