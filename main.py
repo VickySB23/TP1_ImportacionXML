@@ -1,4 +1,4 @@
-from app.config.database import SessionLocal
+from app.config.database import SessionLocal, Base, engine
 from app.services.import_xml import import_xml_to_db
 from app.models import (
     Pais, Grado, Universidad, Facultad, Materia,
@@ -18,6 +18,9 @@ MODELOS_Y_ARCHIVOS = [
 ]
 
 def main():
+    # Crear todas las tablas en la base de datos si no existen
+    Base.metadata.create_all(bind=engine)
+
     session = SessionLocal()
     for modelo, archivo in MODELOS_Y_ARCHIVOS:
         try:

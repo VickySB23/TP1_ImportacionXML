@@ -1,16 +1,14 @@
 from dataclasses import dataclass
 from sqlalchemy import Column, Integer, String
-from typing import Optional
 from app.config.database import Base
 import xml.etree.ElementTree as ET
 
 @dataclass(init=False, repr=True, eq=True)
 class Materia(Base):
     __tablename__ = 'materias'
-    
-    id = Column(Integer, primary_key=True)
-    codigo = Column(String(20), unique=True, nullable=False)
-    nombre = Column(String(100), nullable=False)
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    codigo = Column(String(50), nullable=True)
+    nombre = Column(String(200), nullable=True)
     creditos = Column(Integer, nullable=True)
     horas_semanales = Column(Integer, nullable=True)
 
@@ -24,4 +22,6 @@ class Materia(Base):
                 if isinstance(col.type, Integer):
                     value = int(value)
                 fields[col.name] = value
+            else:
+                fields[col.name] = None
         return cls(**fields)

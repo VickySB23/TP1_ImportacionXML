@@ -7,8 +7,8 @@ import xml.etree.ElementTree as ET
 class Especialidad(Base):
     __tablename__ = 'especialidades'
     id = Column(Integer, primary_key=True, autoincrement=True)
-    nombre = Column(String(100), nullable=False)
-    letra = Column(String(1), nullable=False)
+    nombre = Column(String(100), nullable=True)
+    letra = Column(String(1), nullable=True)
     observacion = Column(String(255), nullable=True)
 
     @classmethod
@@ -21,4 +21,6 @@ class Especialidad(Base):
                 if isinstance(col.type, Integer):
                     value = int(value)
                 fields[col.name] = value
+            else:
+                fields[col.name] = None
         return cls(**fields)

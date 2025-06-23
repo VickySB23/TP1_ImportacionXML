@@ -8,9 +8,9 @@ class Localidad(Base):
     __tablename__ = 'localidades'
     
     id = Column(Integer, primary_key=True)
-    nombre = Column(String(100), nullable=False)
-    provincia = Column(String(100))
-    codigo_postal = Column(String(10))
+    nombre = Column(String(100), nullable=True)
+    provincia = Column(String(100), nullable=True)
+    codigo_postal = Column(String(10), nullable=True)
 
     @classmethod
     def from_xml_node(cls, node: ET.Element):
@@ -22,4 +22,6 @@ class Localidad(Base):
                 if isinstance(col.type, Integer):
                     value = int(value)
                 fields[col.name] = value
+            else:
+                fields[col.name] = None
         return cls(**fields)

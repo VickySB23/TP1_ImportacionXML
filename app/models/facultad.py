@@ -7,16 +7,16 @@ import xml.etree.ElementTree as ET
 class Facultad(Base):
     __tablename__ = 'facultades'
     id = Column(Integer, primary_key=True, autoincrement=True)
-    nombre = Column(String(100), nullable=False)
-    abreviatura = Column(String(10), nullable=False)
-    directorio = Column(String(100), nullable=False)
-    sigla = Column(String(10), nullable=False)
-    codigopostal = Column(String(10), nullable=True)
-    ciudad = Column(String(50), nullable=True)
-    domicilio = Column(String(100), nullable=True)
-    telefono = Column(String(20), nullable=True)
+    nombre = Column(String(200), nullable=True)
+    abreviatura = Column(String(50), nullable=True)
+    directorio = Column(String(100), nullable=True)
+    sigla = Column(String(20), nullable=True)
+    codigopostal = Column(String(20), nullable=True)
+    ciudad = Column(String(100), nullable=True)
+    domicilio = Column(String(200), nullable=True)
+    telefono = Column(String(50), nullable=True)
     contacto = Column(String(100), nullable=True)
-    email = Column(String(100), nullable=False)
+    email = Column(String(100), nullable=True)
 
     @classmethod
     def from_xml_node(cls, node: ET.Element):
@@ -28,4 +28,6 @@ class Facultad(Base):
                 if isinstance(col.type, Integer):
                     value = int(value)
                 fields[col.name] = value
+            else:
+                fields[col.name] = None  # Permite nulos
         return cls(**fields)

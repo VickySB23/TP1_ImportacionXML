@@ -8,7 +8,7 @@ class Grado(Base):
     __tablename__ = 'grados'
     id = Column(Integer, primary_key=True, autoincrement=True)
     nombre = Column(String(50), nullable=False)
-    descripcion = Column(String(200), nullable=False)
+    descripcion = Column(String(200), nullable=True)  # Permitir nulos
 
     @classmethod
     def from_xml_node(cls, node: ET.Element):
@@ -20,4 +20,6 @@ class Grado(Base):
                 if isinstance(col.type, Integer):
                     value = int(value)
                 fields[col.name] = value
+            elif col.name == "descripcion":
+                fields[col.name] = None  # Si no hay descripción, poner None
         return cls(**fields)
