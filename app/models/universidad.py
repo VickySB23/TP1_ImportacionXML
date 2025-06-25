@@ -19,4 +19,6 @@ class Universidad(Base):
                 if isinstance(col.type, Integer):
                     value = int(value)
                 fields[col.name] = value
+            elif col.name == "sigla":
+                fields[col.name] = None  # Si no hay sigla, poner None
         return cls(**fields)

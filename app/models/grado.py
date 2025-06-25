@@ -19,4 +19,6 @@ class Grado(Base):
                 if isinstance(col.type, Integer):
                     value = int(value)
                 fields[col.name] = value
+            elif col.name == "descripcion":
+                fields[col.name] = None  # Si no hay descripción, poner None
         return cls(**fields)

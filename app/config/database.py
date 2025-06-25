@@ -4,10 +4,10 @@ from sqlalchemy.orm import sessionmaker
 import os
 
 # Configuración desde variables de entorno
-DB_USER = os.getenv('DB_USER', 'Relyckon')
-DB_PASSWORD = os.getenv('DB_PASSWORD', 'tienshu123')
+DB_USER = os.getenv('DB_USER', 'Vicky_SB')
+DB_PASSWORD = os.getenv('DB_PASSWORD', 'logan132324')
 DB_HOST = os.getenv('DB_HOST', 'localhost')
-DB_PORT = os.getenv('DB_PORT', '5433')
+DB_PORT = os.getenv('DB_PORT', '5432')
 DB_NAME = os.getenv('DB_NAME', 'SYSACAD')
 
 # Cadena de conexión para PostgreSQL

@@ -19,4 +19,6 @@ class Facultad(Base):
                 if isinstance(col.type, Integer):
                     value = int(value)
                 fields[col.name] = value
+            else:
+                fields[col.name] = None  # Permite nulos
         return cls(**fields)

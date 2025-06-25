@@ -1,6 +1,5 @@
 from dataclasses import dataclass
 from sqlalchemy import Column, Integer, String
-from typing import Optional
 from app.config.database import Base
 import xml.etree.ElementTree as ET
 
@@ -24,4 +23,6 @@ class Materia(Base):
                 if isinstance(col.type, Integer):
                     value = int(value)
                 fields[col.name] = value
+            else:
+                fields[col.name] = None
         return cls(**fields)

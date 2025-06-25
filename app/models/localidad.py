@@ -21,4 +21,6 @@ class Localidad(Base):
                 if isinstance(col.type, Integer):
                     value = int(value)
                 fields[col.name] = value
+            else:
+                fields[col.name] = None
         return cls(**fields)
