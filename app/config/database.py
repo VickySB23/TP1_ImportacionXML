@@ -2,9 +2,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 import os
-from flask_sqlalchemy import SQLAlchemy
 
-db = SQLAlchemy()
 # Configuración desde variables de entorno
 DB_USER = os.getenv('DB_USER', 'Relyckon')
 DB_PASSWORD = os.getenv('DB_PASSWORD', 'tienshu123')

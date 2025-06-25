@@ -8,11 +8,9 @@ import xml.etree.ElementTree as ET
 class Plan(Base):
     __tablename__ = 'planes'
     
-    id = Column(Integer, primary_key=True)
+    especialidad = Column(Integer, primary_key=True)
+    plan = Column(String(20), unique=True)
     nombre = Column(String(100), nullable=True)
-    codigo = Column(String(20), unique=True)
-    vigente = Column(Boolean, default=True)
-    fecha_aprobacion = Column(Date)
     
     @classmethod
     def from_xml_node(cls, node: ET.Element):

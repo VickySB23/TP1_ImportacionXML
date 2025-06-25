@@ -6,10 +6,8 @@ import xml.etree.ElementTree as ET
 @dataclass(init=False, repr=True, eq=True)
 class Especialidad(Base):
     __tablename__ = 'especialidades'
-    id = Column(Integer, primary_key=True, autoincrement=True)
+    especialidad = Column(Integer, primary_key=True, autoincrement=True)
     nombre = Column(String(100), nullable=False)
-    letra = Column(String(1), nullable=False)
-    observacion = Column(String(255), nullable=True)
 
     @classmethod
     def from_xml_node(cls, node: ET.Element):

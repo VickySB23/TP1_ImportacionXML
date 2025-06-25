@@ -8,11 +8,11 @@ import xml.etree.ElementTree as ET
 class Materia(Base):
     __tablename__ = 'materias'
     
-    id = Column(Integer, primary_key=True)
-    codigo = Column(String(20), unique=True, nullable=False)
+    especialidad = Column(Integer, primary_key=True)
+    plan = Column(String(20), unique=True, nullable=False)
+    materia = Column(String(100), nullable=False)
     nombre = Column(String(100), nullable=False)
-    creditos = Column(Integer, nullable=True)
-    horas_semanales = Column(Integer, nullable=True)
+    ano = Column(Integer, nullable=True)
 
     @classmethod
     def from_xml_node(cls, node: ET.Element):

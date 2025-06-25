@@ -6,11 +6,10 @@ import xml.etree.ElementTree as ET
 @dataclass(init=False, repr=True, eq=True)
 class Localidad(Base):
     __tablename__ = 'localidades'
-    
-    id = Column(Integer, primary_key=True)
-    nombre = Column(String(100), nullable=False)
+    codigo = Column(Integer, primary_key=True)
+    ciudad = Column(String(100), nullable=False)
     provincia = Column(String(100))
-    codigo_postal = Column(String(10))
+    pais_del_c = Column(String(10))
 
     @classmethod
     def from_xml_node(cls, node: ET.Element):

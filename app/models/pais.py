@@ -7,10 +7,8 @@ import xml.etree.ElementTree as ET
 class Pais(Base):
     __tablename__ = 'paises'
     
-    id = Column(Integer, primary_key=True)
+    pais = Column(Integer, primary_key=True)
     nombre = Column(String(100), nullable=False)
-    codigo_iso = Column(String(3), unique=True)
-    nacionalidad = Column(String(100))
     
     @classmethod
     def from_xml_node(cls, node: ET.Element):
