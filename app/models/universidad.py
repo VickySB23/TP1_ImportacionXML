@@ -5,20 +5,33 @@ import xml.etree.ElementTree as ET
 
 @dataclass(init=False, repr=True, eq=True)
 class Universidad(Base):
-    __tablename__ = "universidad"
-    universidad = Column(Integer, primary_key=True, autoincrement=True)
-    nombre = Column(String(100), nullable=False)
+    __tablename__ = "universidades"
+    id = Column('universidad', Integer, primary_key=True)
+    nombre = Column(String(100), nullable=False, unique=False)
 
     @classmethod
     def from_xml_node(cls, node: ET.Element):
-        fields = {}
-        for col in cls.__table__.columns:
-            xml_value = node.find(col.name)
-            if xml_value is not None and xml_value.text is not None:
-                value = xml_value.text.strip()
-                if isinstance(col.type, Integer):
-                    value = int(value)
-                fields[col.name] = value
-            elif col.name == "sigla":
-                fields[col.name] = None  # Si no hay sigla, poner None
-        return cls(**fields)
+        try:
+            # Mapeo de campos XML (nota: 'universida' en XML vs 'universidad' en BD)
+            id_node = node.find('universida')  # Atención: typo en XML ('universida')
+            nombre_node = node.find('nombre')
+            
+            # Validación de campos requeridos
+            if None in (id_node, nombre_node):
+                return None
+            if not id_node.text.strip() or not nombre_node.text.strip():
+                return None
+                
+            # Conversión de valores
+            try:
+                universidad_id = int(id_node.text.strip())
+            except ValueError:
+                return None
+                
+            nombre = nombre_node.text.strip()
+            
+            return cls(id=universidad_id, nombre=nombre)
+            
+        except Exception as e:
+            print(f"Error procesando universidad: {e}")
+            return None
