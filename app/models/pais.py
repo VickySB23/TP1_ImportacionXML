@@ -8,16 +8,32 @@ class Pais(Base):
     __tablename__ = 'paises'
     
     pais = Column(Integer, primary_key=True)
-    nombre = Column(String(100), nullable=False)
-    
+    nombre = Column(String(100), nullable=False, unique=True)
+
     @classmethod
     def from_xml_node(cls, node: ET.Element):
-        fields = {}
-        for col in cls.__table__.columns:
-            xml_value = node.find(col.name)
-            if xml_value is not None and xml_value.text is not None:
-                value = xml_value.text.strip()
-                if isinstance(col.type, Integer):
-                    value = int(value)
-                fields[col.name] = value
-        return cls(**fields)
+        try:
+            # Extracción directa de nodos
+            pais_node = node.find('pais')
+            nombre_node = node.find('nombre')
+            
+            # Validación de campos requeridos
+            if None in (pais_node, nombre_node):
+                return None
+                
+            if not pais_node.text.strip() or not nombre_node.text.strip():
+                return None
+                
+            # Conversión de tipos
+            try:
+                pais_id = int(pais_node.text.strip())
+            except ValueError:
+                return None
+                
+            nombre = nombre_node.text.strip()
+            
+            return cls(pais=pais_id, nombre=nombre)
+            
+        except Exception as e:
+            print(f"Error procesando país: {e}")
+            return None
